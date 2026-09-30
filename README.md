@@ -12,6 +12,8 @@ In solo you get four AI officers, but co-op gets none. A duo clears a whole buil
 
 This mod brings the solo AI squad into co-op and sizes it to fit the lobby. Players and bots always add up to a full squad of five.
 
+**[Website](https://rgb-outl4w.github.io/ArmedUpNReady/)** · **[Download](https://github.com/RGB-Outl4w/ArmedUpNReady/releases/latest)**
+
 ---
 
 ## Contents
