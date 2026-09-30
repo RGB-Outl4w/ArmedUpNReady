@@ -1,0 +1,16 @@
+# Release builds
+dist/
+*.zip
+
+# UE4SS output, if a dev copy of the game folder ends up here
+UE4SS.log
+UE4SS_ObjectDump.txt
+CXXHeaderDump/
+
+# OS / editor / local tooling
+.claude/
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/

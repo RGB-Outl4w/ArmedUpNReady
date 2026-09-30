@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Armed Up 'N' Ready — AI squadmates for Ready or Not co-op</title>
+  <meta name="description" content="A host-only Ready or Not mod: AI SWAT officers fill every empty slot of your co-op squad, up to five.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Armed Up 'N' Ready home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/></svg>
+        <span>AU'N'R</span>
+      </a>
+      <nav aria-label="Sections">
+        <a href="#how">How it works</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-small" href="https://github.com/RGB-Outl4w/ArmedUpNReady">GitHub</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="kicker">Ready or Not · Co-op mod</p>
+        <h1>Armed Up <span>'N'</span> Ready</h1>
+        <p class="lead">Solo gives you four AI officers, but co-op gives you none. This mod puts them back in co-op and deploys exactly as many as your lobby is missing, for a full five-person squad every mission.</p>
+        <div class="cta">
+          <a class="btn" href="https://github.com/RGB-Outl4w/ArmedUpNReady/releases/latest">Download</a>
+          <a class="btn btn-ghost" href="#install">Install guide</a>
+        </div>
+        <ul class="pills">
+          <li>Host-only install</li>
+          <li>Native command menu</li>
+          <li>Solo untouched</li>
+        </ul>
+      </div>
+
+      <div class="squad card" aria-labelledby="squad-title">
+        <div class="squad-head">
+          <h2 id="squad-title">Squad builder</h2>
+          <p id="squad-status" aria-live="polite"></p>
+        </div>
+        <p class="seg-label" id="players-label">Players in lobby</p>
+        <div class="seg" id="players" role="radiogroup" aria-labelledby="players-label"></div>
+        <div class="seg seg-2" id="mode" role="radiogroup" aria-label="Mod"></div>
+        <ol class="slots" id="slots"></ol>
+        <p class="legend"><span class="dot dot-player"></span>Player <span class="dot dot-blue"></span>Blue element <span class="dot dot-red"></span>Red element</p>
+      </div>
+    </section>
+
+    <section class="wrap features" aria-label="Features">
+      <article class="card feature">
+        <h3>Fills gaps, nothing more</h3>
+        <p>One officer per missing player, up to four. A full lobby gets no bots at all.</p>
+      </article>
+      <article class="card feature">
+        <h3>Only the host installs it</h3>
+        <p>Friends join with the unmodded game. The bots are server-side and replicate like any other character.</p>
+      </article>
+      <article class="card feature">
+        <h3>The game's own officers</h3>
+        <p>They use the stock spawn code, AI, loadouts and command menu. No custom assets to go out of date.</p>
+      </article>
+      <article class="card feature">
+        <h3>Out of the way</h3>
+        <p>Solo, the station and PvP behave exactly as before. It's about 80 lines of Lua.</p>
+      </article>
+    </section>
+
+    <section id="how" class="wrap section">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-lead">Ready or Not already has almost everything needed. The mod only switches it on.</p>
+      <ol class="steps">
+        <li class="card">
+          <span class="step-num">01</span>
+          <h3>The switch</h3>
+          <p>A hidden console variable, <code>a.RonSpawnSwatInIncompatibleMode</code>, makes co-op spawn the solo squad. It isn't flagged as a cheat, so it works in the retail build.</p>
+        </li>
+        <li class="card">
+          <span class="step-num">02</span>
+          <h3>The count</h3>
+          <p>When a match starts, the game respawns every player and then calls <code>SpawnPolice()</code>. The mod counts players while their characters are being built and sets the switch just in time.</p>
+        </li>
+        <li class="card">
+          <span class="step-num">03</span>
+          <h3>The trim</h3>
+          <p><code>SpawnPolice()</code> always spawns four officers. About a second later, the mod removes the extras the same way the game's own debug command does, and corrects the officer counters.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="install" class="wrap section">
+      <h2 class="section-title">Install</h2>
+      <p class="section-lead">About two minutes, and only on the host's PC.</p>
+      <ol class="install">
+        <li>
+          <h3>Get UE4SS</h3>
+          <p>Download the <code>UE4SS_v3.0.1-*.zip</code> from the <a href="https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental-latest">experimental-latest</a> release and extract it into the game's <code>Win64</code> folder:</p>
+          <div class="copy"><code>steamapps\common\Ready Or Not\ReadyOrNot\Binaries\Win64</code><button type="button" data-copy="steamapps\common\Ready Or Not\ReadyOrNot\Binaries\Win64">Copy</button></div>
+        </li>
+        <li>
+          <h3>Drop in the mod</h3>
+          <p>Extract the <a href="https://github.com/RGB-Outl4w/ArmedUpNReady/releases/latest">latest release</a> zip into the same folder. That creates:</p>
+          <div class="copy"><code>Win64\ue4ss\Mods\ArmedUpNReady</code><button type="button" data-copy="Win64\ue4ss\Mods\ArmedUpNReady">Copy</button></div>
+        </li>
+        <li>
+          <h3>Host and deploy</h3>
+          <p>Launch from Steam, host a co-op lobby and start a mission. <code>ue4ss\UE4SS.log</code> should show a line like:</p>
+          <div class="copy"><code>[ArmedUpNReady] humans=2 bots=3</code><button type="button" data-copy="[ArmedUpNReady] humans=2 bots=3">Copy</button></div>
+        </li>
+      </ol>
+      <div class="card config">
+        <h3>Want a smaller squad?</h3>
+        <p>Change one line at the top of <code>Scripts\main.lua</code>. For example, <code>4</code> gives a duo two bots.</p>
+        <pre><code>local SQUAD_SIZE = 5 -- players + bots</code></pre>
+      </div>
+    </section>
+
+    <section id="faq" class="wrap section">
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq">
+        <details>
+          <summary>Do my friends need the mod?</summary>
+          <p>No. Only the host runs UE4SS and the mod. Everyone else plays the normal game.</p>
+        </details>
+        <details>
+          <summary>Can clients command the bots?</summary>
+          <p>No, only the host. Ready or Not has no network call for a client to give SWAT orders, so client commands would need a much bigger mod on every PC.</p>
+        </details>
+        <details>
+          <summary>What if someone leaves partway through a mission?</summary>
+          <p>The squad size is set when the mission starts and stays that way until the next deploy.</p>
+        </details>
+        <details>
+          <summary>Why do I keep the Blue element first?</summary>
+          <p>The game puts Alpha and Beta in Blue. Smaller squads keep officers in spawn order.</p>
+        </details>
+        <details>
+          <summary>Will it survive game updates?</summary>
+          <p>It relies on game internals, so a large patch can break it. Update UE4SS first, then check for a new release.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>MIT licensed · <a href="https://github.com/RGB-Outl4w/ArmedUpNReady">Source on GitHub</a></p>
+      <p class="fine">Ready or Not is a trademark of VOID Interactive. Armed Up 'N' Ready is a fan-made mod and is not affiliated with or endorsed by VOID Interactive.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
