@@ -35,7 +35,7 @@ This mod brings the solo AI squad into co-op and sizes it to fit the lobby. Play
 - **Normal commands.** The host commands the bots through the standard command menu: stack up, breach & clear, fall in, element switching, and so on.
 - **The game's own officers.** They use the game's spawn code, AI and loadouts. No custom characters or assets.
 - **Solo is untouched.** Station, PvP and single-player behave exactly as before.
-- **Small.** One Lua script, about 80 lines.
+- **Small.** One Lua script, about 100 lines.
 
 ## Squad size
 
@@ -95,6 +95,9 @@ Ready or Not already contains most of this; the mod just drives it.
 3. **The trim.** `SpawnPolice()` always spawns all four officers. It then moves `SpawnedSWATAI[0]` to `[3]` into position using fixed indices, so spawning fewer would crash the game.
    - Instead, the mod waits about a second and removes the extra officers. It destroys each one's AI controller and then the character, as the game's own `DestroySwatTeam` debug command does.
    - It then shrinks `SpawnedSWATAI` and the mission's officer counters to match.
+4. **The wipe check.** The game's `AreAllPlayersDead()` counts living SWAT officers as survivors. Left alone, a squad whose players have all died would never fail the mission.
+   - Once a second, the mod repeats the game's check without counting the bots: is any player character's health above 0?
+   - If none is, it calls the game's own `StartMissionEndTimer(false)`, which is how vanilla co-op ends a wiped mission.
 
 Everything hangs off the game mode, which only exists on the server. A client with the mod installed does nothing extra.
 
